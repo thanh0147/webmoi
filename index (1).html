@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồi 2: Tấu Chương Lục Bộ</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; text-align: center; color: #333; }
+        .card { background: #fff; max-width: 500px; margin: 0 auto; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-top: 5px solid #f57c00; }
+        h2 { color: #f57c00; }
+        input[type="text"] { width: 80%; padding: 10px; margin: 15px 0; border: 1px solid #ccc; border-radius: 5px; text-align: center; font-size: 16px; text-transform: uppercase; }
+        button { background: #f57c00; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; }
+        .result { margin-top: 15px; font-weight: bold; font-size: 16px; }
+        .success { color: green; } border: red;
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>📍 HỒI 2: TẤU CHƯƠNG LỤC BỘ</h2>
+        <p><strong>Mật vụ Kinh thành</strong></p>
+        <p><i>Hãy nhập từ khóa tên Bộ chuyên trách để phân loại tấu chương mật.</i></p>
+        <input type="text" id="answerInput" placeholder="Nhập tên bộ viết liền không dấu...">
+        <br>
+        <button onclick="checkAnswer()">NỘP ĐÁP ÁN</button>
+        <div id="resultBox" class="result"></div>
+    </div>
+    <script>
+        async function sha256(m) {
+            const b = new TextEncoder().encode(m);
+            const h = await crypto.subtle.digest('SHA-256', b);
+            return Array.from(new Uint8Array(h)).map(x => x.toString(16).padStart(2, '0')).join('');
+        }
+        async function checkAnswer() {
+            let i = document.getElementById("answerInput").value.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/Đ/g, "D").replace(/\s+/g, ' ');
+            const r = document.getElementById("resultBox");
+            const h = await sha256(i);
+            const t = "294319bdfbe23f46f2c25603409a82bc854747eb4634f19b84177d69287c88b9";
+            if (h === t) {
+                r.className = "result success";
+                r.innerHTML = "🔊 *Tiếng gõ dấu sắc phong bằng gỗ vang lên đanh thép!*<br><br><b>CHÍNH XÁC!</b> Văn thư đã được phân loại đúng chức năng.<br><i>Chỉ dẫn tiếp theo:</i> Hãy tiến về phía Tây ngoài Kinh Thành, nơi yên nghỉ thiên thu của các vị hoàng đế vĩ đại!";
+            } else {
+                r.className = "result error";
+                r.innerHTML = "❌ Sai lệch thông tin! Bộ máy hành chính đang rối loạn. Hãy phân tích lại từ khóa.";
+            }
+        }
+    </script>
+</body>
+</html>
